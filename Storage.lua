@@ -129,7 +129,7 @@ function g_DB:GetLastSeen(a_PlayerName)
 	self:ExecuteStatement(
 		"SELECT * FROM LastSeen WHERE PlayerName = ? COLLATE NOCASE",
 		{
-			string.lower(a_PlayerName),
+			a_PlayerName,
 		},
 		function (a_Values)
 			res = a_Values
@@ -137,6 +137,57 @@ function g_DB:GetLastSeen(a_PlayerName)
 	)
 	
 	return res
+end
+
+
+
+
+
+--- Updates the LastSeen info for the specified player and the specified event type
+-- a_EventType is either "LastInDate" or "LastOutDate"
+function g_DB:UpdateLastSeen(a_Player, a_EventType)
+	-- Check params:
+	assert(tolua.type(a_Player) == "cPlayer")
+	assert((a_EventType == "LastInDate") or (a_EventType == "LastOutDate"))
+	
+	-- Check if the player is already in the DB:
+	local PlayerName = a_Player:GetName()
+	local IsPresent
+	self:ExecuteStatement(
+		"SELECT * FROM LastSeen WHERE PlayerName = ? COLLATE NOCASE",
+		{
+			PlayerName,
+		},
+		function()
+			IsPresent = true
+		end
+	)
+	
+	if (IsPresent) then
+		-- Update the DB
+		self:ExecuteStatement(
+			"UPDATE LastSeen SET LastPosX = ?, LastPosY = ?, LastPosZ = ?, " .. a_EventType .. " = ? WHERE PlayerName = ? COLLATE NOCASE",
+			{
+				math.floor(a_Player:GetPosX()),
+				math.floor(a_Player:GetPosY()),
+				math.floor(a_Player:GetPosZ()),
+				os.time(),
+				PlayerName
+			}
+		)
+	else
+		-- Insert into the DB:
+		self:ExecuteStatement(
+			"INSERT INTO LastSeen (LastPosX, LastPosY, LastPosZ, LastInDate, PlayerName) VALUES (?, ?, ?, ?, ?)",
+			{
+				math.floor(a_Player:GetPosX()),
+				math.floor(a_Player:GetPosY()),
+				math.floor(a_Player:GetPosZ()),
+				os.time(),
+				PlayerName
+			}
+		)
+	end
 end
 
 

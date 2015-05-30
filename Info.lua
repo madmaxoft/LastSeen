@@ -45,6 +45,22 @@ g_PluginInfo =
 		},  -- /lastseencfg
 	},  -- Commands
 	
+	ConsoleCommands =
+	{
+		lastseen =
+		{
+			HelpString = "Displays the last time and place a player has been seen on this server",
+			Handler = HandleConsoleCmdLastSeen,
+			ParameterCombinations =
+			{
+				{
+					Params = "<PlayerName>",
+					Help = "Displays the last time and place the specified player has been seen on this server",
+				},
+			},
+		},  -- lastseen
+	},  -- ConsoleCommands
+	
 	Permissions =
 	{
 		["lastseen.admin.seeall"] =
