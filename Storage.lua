@@ -136,6 +136,11 @@ function g_DB:GetLastSeen(a_PlayerName)
 		end
 	)
 	
+	-- If the Cfg is not set in the DB, use the one from the settings (if available) or a hardcoded one:
+	if (res) then
+		res.Cfg = res.Cfg or g_Config.DefaultCfg or "all"
+	end
+	
 	return res
 end
 

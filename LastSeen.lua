@@ -193,6 +193,7 @@ end
 
 
 function Initialize(a_Plugin)
+	InitConfig()
 	InitStorage()
 
 	-- Register the commands:
