@@ -65,8 +65,18 @@ g_PluginInfo =
 	{
 		["lastseen.admin.seeall"] =
 		{
-			Descriptions = "Allows admins to see the LastSeen info even for players that opted out of the LastSeen feature",
+			Description = "Allows admins to see the LastSeen info even for players that opted out of the LastSeen feature",
 			RecommendedGroups = "admins",
+		},
+		["lastseen.lastseen"] =
+		{
+			Description = "Allows players to see when and where another player was last seen on the server",
+			RecommendedGroups = "all",
+		},
+		["lastseen.lastseencfg"] =
+		{
+			Description = "Allows players to set the level of information about them available to other players through the /lastseen command",
+			RecommendedGroups = "all",
 		},
 	},  -- Permissions
 }
