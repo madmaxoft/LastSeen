@@ -110,6 +110,40 @@ end
 
 
 
+--- Map of "valid config" => true for the /lastseencfg command
+local g_ValidCfg =
+{
+	["all"] = true,
+	["off"] = true,
+	["pos"] = true,
+	["time"] = true,
+}
+
+function HandleCmdLastSeenCfg(a_Split, a_Player, a_EntireCmd)
+	-- Check params:
+	if not(g_ValidCfg[a_Split[2]]) then
+		a_Player:SendMessage(cCompositeChat("Usage: " .. a_Split[1] .. " {")
+			:AddRunCommandPart("off", a_Split[1] .. " off", "u")
+			:AddTextPart("|")
+			:AddRunCommandPart("time", a_Split[1] .. " time", "u")
+			:AddTextPart("|")
+			:AddRunCommandPart("pos", a_Split[1] .. " pos", "u")
+			:AddTextPart("|")
+			:AddRunCommandPart("all", a_Split[1] .. " all", "u")
+			:AddTextPart("}")
+		)
+		return true
+	end
+	
+	g_DB:SetPlayerLastSeenCfg(a_Player:GetName(), a_Split[2])
+	a_Player:SendMessage("Your /lastseen config has been updated to \"" .. a_Split[2] .. "\"")
+	return true
+end
+
+
+
+
+
 function HandleConsoleCmdLastSeen(a_Split, a_EntireCmd)
 	-- Check params:
 	if not(a_Split[2]) then

@@ -143,6 +143,27 @@ end
 
 
 
+--- Sets the Cfg value of the specified player
+-- Assumes that the player is already in the DB
+function g_DB:SetPlayerLastSeenCfg(a_PlayerName, a_Cfg)
+	-- Check params:
+	assert(type(a_PlayerName) == "string")
+	assert(type(a_Cfg) == "string")
+	
+	-- Update the DB record:
+	self:ExecuteStatement(
+		"UPDATE LastSeen SET Cfg = ? WHERE PlayerName = ?",
+		{
+			a_Cfg,
+			a_PlayerName
+		}
+	)
+end
+
+
+
+
+
 --- Updates the LastSeen info for the specified player and the specified event type
 -- a_EventType is either "LastInDate" or "LastOutDate"
 function g_DB:UpdateLastSeen(a_Player, a_EventType)
