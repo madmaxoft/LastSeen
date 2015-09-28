@@ -33,7 +33,7 @@ end
 --- Initializes the g_Config from the config file, if available
 function InitConfig()
 	-- Check if the file exists
-	if not(cFile:Exists(CONFIG_FILE)) then
+	if not(cFile:IsFile(CONFIG_FILE)) then
 		-- Copy our example config file to the folder, to let the admin know the format:
 		local PluginFolder = cPluginManager:Get():GetCurrentPlugin():GetLocalFolder()
 		local ExampleFile = CONFIG_FILE:gsub(".cfg", ".example.cfg")
